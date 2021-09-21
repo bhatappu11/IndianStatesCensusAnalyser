@@ -12,6 +12,7 @@ public class StateCensusAnalyserTest {
 	private static final String CSV_WITH_INCORRECT_HEADER = "./src/test/resources/CensusDataIncorrectHeader.csv";
 	
 	private static final String INDIAN_STATE_CODES = "./src/test/resources/IndiaStateCode.csv";
+	private static final String STATE_CODES_WITH_WRONG_FILEPATH = "./src/main/resources/IndianStateCodes.csv"; 
 	
 	@Test
 	public void givenStateCensusCsvFile_ShouldReturn_CorrectNumberOfRecords() {
@@ -50,7 +51,7 @@ public class StateCensusAnalyserTest {
 		}
 	}
 	@Test
-	public void givenStateCensusCSVFile_WhenCorrectButIncorrectDelimiter_ShouldThrowException() {
+	public void givenStateCensusCsvFile_WhenCorrectButIncorrectDelimiter_ShouldThrowException() {
 		try {
 			StateCensusAnalyser censusAnalyser = new StateCensusAnalyser();
 			ExpectedException exceptionRule = ExpectedException.none();
@@ -62,7 +63,7 @@ public class StateCensusAnalyserTest {
 		}
 	}
 	@Test
-    public void givenStateCensusCSVFile_WhenCorrectButHeaderIncorrect_ShouldThrowException() {
+    public void givenStateCensusCsvFile_WhenCorrectButHeaderIncorrect_ShouldThrowException() {
 		try {
 			StateCensusAnalyser censusAnalyser = new StateCensusAnalyser();
 			ExpectedException exceptionRule = ExpectedException.none();
@@ -74,7 +75,7 @@ public class StateCensusAnalyserTest {
 		}
     }
 	@Test
-	public void givenIndianStateCodeCSVFile_ShouldReturn_NumberOfRecords() {
+	public void givenIndianStateCodeCsvFile_ShouldReturn_NumberOfRecords() {
 	        try {
 	        	StateCensusAnalyser censusAnalyser = new StateCensusAnalyser();
 				int numOfRecords = censusAnalyser.loadIndianStateCode(INDIAN_STATE_CODES);
@@ -82,6 +83,22 @@ public class StateCensusAnalyserTest {
 	        } catch (CensusAnalyserException e) { 
 	        	e.printStackTrace();
 	        }
-	    }
+	}
+	@Test
+	public void givenIndianStateCodeCsvFile_WithIncorrectFilePath_ShouldThrowException() 
+    {
+		try 
+		{
+			StateCensusAnalyser censusAnalyser = new StateCensusAnalyser();
+			ExpectedException exceptionRule = ExpectedException.none();
+			exceptionRule.expect(CensusAnalyserException.class);
+			censusAnalyser.loadIndianStateCode(STATE_CODES_WITH_WRONG_FILEPATH);
+		} 
+		catch (CensusAnalyserException e) 
+		{
+			Assert.assertEquals(CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM, e.type);
+			System.out.println("wrong path: "+e.getMessage());
+		}
+	}
 
 }
