@@ -32,6 +32,7 @@ public class StateCensusAnalyserTest {
 			censusAnalyser.loadIndianCensusData(WRONG_CSV_FILE_PATH);
 		} catch (CensusAnalyserException e) {
 			Assert.assertEquals(CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM, e.type);
+			System.out.println("Wrong path: "+e.getMessage());
 		}
 	}
 	@Test
@@ -43,6 +44,7 @@ public class StateCensusAnalyserTest {
 			censusAnalyser.loadIndianCensusData(WRONG_FILE_TYPE);
 		} catch (CensusAnalyserException e) {
 			Assert.assertEquals(CensusAnalyserException.ExceptionType.CENSUS_INCORRECT_FILE_FORMAT, e.type);
+			System.out.println(e.getMessage());
 		}
 	}
 	@Test
@@ -54,6 +56,7 @@ public class StateCensusAnalyserTest {
 			censusAnalyser.loadIndianCensusData(CSV_WITH_WRONG_DELIMITER);
 		} catch (CensusAnalyserException e) {
 			Assert.assertEquals(CensusAnalyserException.ExceptionType.CENSUS_WRONG_DELIMITER_OR_HEADER, e.type);
+			System.out.println(e.getMessage());
 		}
 	}
 	@Test
