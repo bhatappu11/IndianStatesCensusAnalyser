@@ -12,7 +12,8 @@ public class StateCensusAnalyserTest {
 	private static final String CSV_WITH_INCORRECT_HEADER = "./src/test/resources/CensusDataIncorrectHeader.csv";
 	
 	private static final String INDIAN_STATE_CODES = "./src/test/resources/IndiaStateCode.csv";
-	private static final String STATE_CODES_WITH_WRONG_FILEPATH = "./src/main/resources/IndianStateCodes.csv"; 
+	private static final String STATE_CODES_WITH_WRONG_FILEPATH = "./src/main/resources/IndianStateCodes.csv";
+	private static final String STATE_CODES_WITH_WRONG_FILE_FORMAT = "./src/test/resources/IndianStateCodeWithWrongFormat.txt";
 	
 	@Test
 	public void givenStateCensusCsvFile_ShouldReturn_CorrectNumberOfRecords() {
@@ -85,20 +86,30 @@ public class StateCensusAnalyserTest {
 	        }
 	}
 	@Test
-	public void givenIndianStateCodeCsvFile_WithIncorrectFilePath_ShouldThrowException() 
-    {
-		try 
-		{
+	public void givenIndianStateCodeCsvFile_WithIncorrectFilePath_ShouldThrowException() {
+		try {
 			StateCensusAnalyser censusAnalyser = new StateCensusAnalyser();
 			ExpectedException exceptionRule = ExpectedException.none();
 			exceptionRule.expect(CensusAnalyserException.class);
 			censusAnalyser.loadIndianStateCode(STATE_CODES_WITH_WRONG_FILEPATH);
-		} 
-		catch (CensusAnalyserException e) 
-		{
+		}catch (CensusAnalyserException e) {
 			Assert.assertEquals(CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM, e.type);
 			System.out.println("wrong path: "+e.getMessage());
 		}
 	}
+	
+	 @Test
+	 public void givenIndianStateCodeCSVFile_WithWrongFileFormat_ShouldThrowException() {
+			try	{
+				StateCensusAnalyser censusAnalyser = new StateCensusAnalyser();
+				ExpectedException exceptionRule = ExpectedException.none();
+				exceptionRule.expect(CensusAnalyserException.class);
+				censusAnalyser.loadIndianStateCode(STATE_CODES_WITH_WRONG_FILE_FORMAT);
+			}catch (CensusAnalyserException e) {
+				Assert.assertEquals(CensusAnalyserException.ExceptionType.CENSUS_INCORRECT_FILE_FORMAT, e.type);
+				System.out.println(e.getMessage());
+			}
+	    }
+
 
 }
