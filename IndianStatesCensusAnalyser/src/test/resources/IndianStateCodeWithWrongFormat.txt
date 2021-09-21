@@ -1,0 +1,6 @@
+SrNo,State Name,TIN,StateCode
+1,Karnataka,29,KA
+2,Andhra Pradesh,28,AP
+3,Delhi,7,DL
+4,Goa,30,GA
+5,Kerala,32,KL
